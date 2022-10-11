@@ -55,6 +55,32 @@ public class User implements UserDetails {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id && username.equals(user.username) && firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) && age == user.age && password.equals(user.password) &&
+                roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (id ^ (id >>> 32));
+
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + age;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + roles.hashCode();
+
+        return result;
+    }
+
+    @Override
     public List<Role> getAuthorities() {
         return roles;
     }
